@@ -61,40 +61,53 @@ function Chat(props) {
 
 
     return (
-        
-        <div className="h-screen flex flex-col justify-center items-center bg-gradient-to-r from-purple-900 to-purple-700">
-          <h1 className="text-4xl text-white mb-8 font-bold">{rooms.toUpperCase()}</h1>
-          <div className="flex flex-col w-1/2 h-96 bg-white rounded-lg overflow-y-scroll">
-            {messages.map(({ id, message, user, userImage, createdAt }) => (
-              <div key={id} className="flex items-center p-4 border-b-2 border-gray-100">
-                <p>
-                  <img className="w-10 h-10 rounded-full mr-4" src={userImage} alt="" />
-                  {user}
-                  {new Date(createdAt?.seconds * 1000).toLocaleString()}
-                </p>
-                <p className="ml-4">{message}</p>
-              </div>
-            ))}
-          </div>
-          <form className="flex w-1/2" onSubmit={handleSubmit}>
-            <input
-              className="w-full rounded-full py-3 px-4 mr-4 bg-gray-100 focus:outline-none"
-              onChange={(e) => setNewMessage(e.target.value)}
-              type="text"
-              value={newMessage}
-              placeholder="Enter your message"
-            />
-            <button
-              className="bg-purple-600 hover:bg-purple-700 text-white rounded-full py-3 px-6 focus:outline-none"
-              type="submit"
-            >
-              Send
-            </button>
-          </form>
+<div className="h-screen flex flex-col bg-slate-600 pt-4 p-6 justify-center items-center ">
+  <h1 className="text-4xl text-white  mb-8 font-bold">{rooms.toUpperCase()}</h1>
+  <div className="flex flex-col w-full flex-grow bg-white sticky rounded-lg overflow-y-hidden">
+  {messages.map(({ id, message, user, userImage, createdAt }) => (
+    <div key={id} className="flex flex-col p-4 border-b border-gray-200">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <img className="w-12 h-12 rounded-full mr-4" src={userImage} alt="" />
           <div>
-            <button onClick={signOutUser}>Logout</button>
+            <p className="font-medium">{user}</p>
+            <p className="text-sm text-gray-500">{new Date(createdAt?.seconds * 1000).toLocaleString()}</p>
           </div>
         </div>
+        <div className="flex items-center">
+          <button className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1 rounded-full mr-2 focus:outline-none">
+            Edit
+          </button>
+          <button className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-full focus:outline-none">
+            Delete
+          </button>
+        </div>
+      </div>
+      <p className="ml-16">{message}</p>
+    </div>
+  ))}
+</div>
+
+  <form className="flex-shrink-0 w-1/2 bottom-0 fixed flex items-end" onSubmit={handleSubmit}>
+    <input
+      className="w-full rounded-full py-3 px-4 mr-4 bg-gray-100 focus:outline-none"
+      onChange={(e) => setNewMessage(e.target.value)}
+      type="text"
+      value={newMessage}
+      placeholder="Enter your message"
+    />
+    <button
+      className="bg-purple-600 hover:bg-purple-700 text-white rounded-full py-3 px-6 focus:outline-none"
+      type="submit"
+    >
+      Send
+    </button>
+  </form>
+  <div>
+    <button onClick={signOutUser}>Logout</button>
+  </div>
+</div>
+
       );
     }
     

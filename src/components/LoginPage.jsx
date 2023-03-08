@@ -20,18 +20,19 @@ function LoginPage(props) {
     }
 
   return (
-<div class="bg-gray-100 flex justify-center items-center h-screen">
+<div class="bg-gray-600 flex justify-center items-center h-screen">
     <div class="w-full max-w-sm mx-auto p-6 bg-white rounded-md shadow-md">
         <h1 class="text-2xl font-bold mb-4">Login Page</h1>
         <p class="text-gray-600 mb-6">Sign in with your Google account</p>
-        <button class="w-full flex items-center justify-center px-4 py-2 text-white bg-red-600 hover:bg-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" onClick={signInWithGoogle}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 mr-2">
-                <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zm3.76 14.29l-1.52 1.52c-.512.513-1.333.513-1.846 0L10 12.846l-1.394 1.935c-.512.513-1.333.513-1.846 0l-1.52-1.52c-.512-.512-.513-1.333 0-1.846l1.935-1.394L5.29 7.76c-.513-.512-.513-1.333 0-1.846l1.52-1.52c.512-.513 1.333-.513 1.846 0L10 7.154l1.394-1.935c.512-.513 1.333-.513 1.846 0l1.52 1.52c.513.512.513 1.333 0 1.846l-1.935 1.394 1.935 1.394c.513.512.513 1.333 0 1.846z"/>
+        <button class="w-full flex items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition duration-300 ease-in-out" onClick={signInWithGoogle}>
+            <svg class="w-6 h-6 mr-2 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.293 8.485a7 7 0 10-9.899 0 7 7 0 009.899 0zm-1.414-1.414a5 5 0 11-7.071 0 5 5 0 017.071 0z" />
             </svg>
-            Sign in with Google
+            <span>Sign in with Google</span>
         </button>
     </div>
 </div>
+
   )
 }
 
