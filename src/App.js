@@ -1,119 +1,102 @@
-import './App.css';
-import { db } from './firebase';
-import { collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { useCollection} from "react-firebase-hooks/firestore"
-import { useEffect, useState } from "react"
+import React, { useState, useRef, useEffect } from "react";
+import LoginPage from "./components/LoginPage";
+import Cookies from "universal-cookie";
+import Chat from "./components/Chat";
+import { auth, db } from './firebase'
+import { signOut } from 'firebase/auth';
+import { collection, onSnapshot, query, getDocs } from 'firebase/firestore';
 
-function App() {
-  const [message, setMessage] = useState('');
-  const [chatRooms, setChatRooms] = useState([]);
-  const [currentChatRoom, setCurrentChatRoom] = useState(null);
-  const [newChatRoomName, setNewChatRoomName] = useState('');
+export default function App() {
+  const cookies = new Cookies();
+  const [isAuth, setIsAuth] = useState(cookies.get("auth_user") || null);
+  const [rooms, setRooms] = useState(null);
+  const [roomList, setRoomList] = useState([]);
+  const roomInputRef = useRef(null);
+
+  const handleCreateRoom = () => {
+    setRooms(roomInputRef.current.value);
+  };
+
+  const signOutUser = async () => {
+    try {
+      await signOut(auth);
+      cookies.remove("auth_user");
+      setIsAuth(false);
+      setRooms(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getRooms = async () => {
+    try {
+      const roomRef = collection(db, 'messages');
+      const roomSnapshot = await getDocs(roomRef);
+      const roomSet = new Set();
+      roomSnapshot.docs.forEach((doc) => {
+        const roomName = doc.data().name;
+        if (!roomSet.has(roomName)) {
+          roomSet.add(roomName);
+        }
+      });
+      const roomList = [...roomSet];
+      console.log("Room list:", roomList);
+      setRoomList(roomList);
+    } catch (error) {
+      console.error("Error getting rooms:", error);
+    }
+  };
+  
+  
 
   useEffect(() => {
-    const q = query(collection(db, 'chat_rooms'), orderBy('time'));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const chatRooms = [];
-      querySnapshot.forEach((doc) => {
-        chatRooms.push({ id: doc.id, ...doc.data() });
-      });
-      setChatRooms(chatRooms);
+    const roomRef = collection(db, 'messages');
+    const unsubscribe = onSnapshot(roomRef, (snapshot) => {
+      const rooms = snapshot.docs.map((doc) => doc.data().room);
+      console.log("Rooms:", rooms);
+      setRoomList(rooms);
+    }, (error) => {
+      console.error("Error getting rooms:", error);
     });
     return unsubscribe;
   }, []);
 
-  const createChatRoom = async () => {
-    const docRef = await addDoc(collection(db, 'chat_rooms'), {
-      name: newChatRoomName,
-      messages: [],
-      time: serverTimestamp(),
-    });
-    setCurrentChatRoom({ id: docRef.id, name: newChatRoomName });
-    setNewChatRoomName('');
-  }
-
-  const deleteChatRoom = async (chatRoom) => {
-    if (chatRoom.id === currentChatRoom?.id) {
-      setCurrentChatRoom(null);
-    }
-    await deleteDoc(doc(db, 'chat_rooms', chatRoom.id));
-  }
-
-  const addMessage = async () => {
-    if (currentChatRoom) {
-      await updateDoc(doc(db, 'chat_rooms', currentChatRoom.id), {
-        messages: [...currentChatRoom.messages, message],
-      });
-      setMessage('');
-    }
-  }
-
-  const deleteMessage = async (messageIndex) => {
-    if (currentChatRoom) {
-      const messages = [...currentChatRoom.messages];
-      messages.splice(messageIndex, 1);
-      await updateDoc(doc(db, 'chat_rooms', currentChatRoom.id), {
-        messages: messages,
-      });
-    }
-  }
-
-
-
-  //show all messages in current chat room
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <div>
-          <h1>Chat Rooms</h1>
-          <ul>
-            {chatRooms.map((chatRoom) => (
-              <li key={chatRoom.id}>
-                <button onClick={() => setCurrentChatRoom(chatRoom)}>
-                  {chatRoom.name || `Chat Room ${chatRoom.id}`}
-                </button>
-                <button onClick={() => deleteChatRoom(chatRoom)}>Delete</button>
-              </li>
-            ))}
-          </ul>
-          <div>
-            <input type="text" value={newChatRoomName} onChange={(e) => setNewChatRoomName(e.target.value)} />
-            <button onClick={createChatRoom}>Create Chat Room</button>
-          </div>
+  if (!isAuth) {
+    return (
+      <div className="App bg-slate-200 w-screen h-screen">
+        <LoginPage setIsAuth={setIsAuth} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="App bg-slate-200 w-screen h-screen">
+        <div className="flex justify-between items-center px-4 py-2 bg-gray-900 text-white">
+          <h1 className="text-2xl font-bold">Chat App</h1>
+          <button className="px-4 py-2 bg-gray-700 hover:bg-gray-800">
+            <a href="/" className="text-white font-medium">Home</a>
+          </button>
         </div>
-        {currentChatRoom && (
+    
+        {rooms ? (
+          <h1><Chat setIsAuth={setIsAuth} setRooms={setRooms} rooms={rooms}/></h1>
+        ) : (
           <div>
-            <h1>{currentChatRoom.name || `Chat Room ${currentChatRoom.id}`}</h1>
+            <h1>Create Room</h1>
+            <input type="text" ref={roomInputRef} placeholder="Room Name" />
+            <button onClick={handleCreateRoom}>Create</button>
+            <h2>Chat Rooms</h2>
             <ul>
-              {currentChatRoom?.messages.map((message, index) => (
-                <li key={index}>
-                  <button onClick={() => deleteMessage(index)}>Delete</button>
-                  {message}
-                </li>
-              ))}
-            </ul>
-            <div>
-              <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} />
-              <button onClick={addMessage}>Send</button>
-            </div>
-          </div>
-        )}
-        {currentChatRoom && (
-          <div>
-            <h2>All Messages in {currentChatRoom.name || `Chat Room ${currentChatRoom.id}`}</h2>
-            <ul>
-              {currentChatRoom.messages.map((message, index) => (
-                <li key={index}>{message}</li>
+              {roomList.map((room, index) => (
+                <li key={index} onClick={() => setRooms(room)}>Room: {room} </li>
               ))}
             </ul>
           </div>
         )}
-      </header>
-    </div>
-  );
-  
-
+        <div>
+          <button onClick={() => setIsAuth(null)}>Logout</button>
+        </div>
+      </div>
+    );
+    
+  }
 }
-
-export default App;
