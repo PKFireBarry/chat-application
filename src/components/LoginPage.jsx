@@ -20,8 +20,9 @@ function LoginPage(props) {
     }
 
   return (
-<div class="bg-gray-600 flex justify-center items-center h-screen">
+<div class="bg-gray-600 flex justify-center items-center h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-red-500">
     <div class="w-full max-w-sm mx-auto p-6 bg-white rounded-md shadow-md">
+        <h1 class="text-3xl text-center text-gray-700 p-2 mb-4 font-extrabold ">Swakabilly's Chat</h1>
         <h1 class="text-2xl font-bold mb-4">Login Page</h1>
         <p class="text-gray-600 mb-6">Sign in with your Google account</p>
         <button class="w-full flex items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition duration-300 ease-in-out" onClick={signInWithGoogle}>
