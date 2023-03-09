@@ -104,7 +104,7 @@ function Chat(props) {
       console.error("Error adding document: ", error);
     }
   };
-  
+
   const handleDelete = async (messageId) => {
     try {
       const message = messages.find((m) => m.id === messageId);
@@ -128,47 +128,41 @@ function Chat(props) {
         </h1>
         <div className="flex flex-col w-3/4 flex-grow bg-gradient-to-r from-indigo-600 to-slate-900 border-4 border-white rounded-lg overflow-y-auto">
           {messages.map(({ id, message, user, userImage, createdAt }) => (
-            <>
-              <ToastContainer />
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              key={id}
+              className="flex flex-col p-4 pb-2 text-white rounded">
               <motion.div
-                initial={{ opacity: 0, y: 100 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                key={id}
-                className="flex flex-col p-4 pb-2 text-white rounded"
-              >
-                <motion.div
-                  initial={{ opacity: 0, scale: 5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center">
-                    <img
-                      className="w-12 h-12 rounded-full  mr-4"
-                      src={userImage}
-                      alt=""
-                    />
-                    <div>
-                      <p className="font-medium">{user}</p>
-                      <p className="text-sm text-gray-500">
-                        {new Date(createdAt?.seconds * 1000).toLocaleString()}
-                      </p>
-                    </div>
+                className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <img
+                    className="w-12 h-12 rounded-full  mr-4"
+                    src={userImage}
+                    alt=""
+                  />
+                  <div>
+                    <p className="font-medium">{user}</p>
+                    <p className="text-sm text-gray-500">
+                      {new Date(createdAt?.seconds * 1000).toLocaleString()}
+                    </p>
                   </div>
-                  <div className="flex items-center">
-                    <button
-                      onClick={() => handleDelete(id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-full focus:outline-none"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </motion.div>
-                <p className="ml-16 text-md">{message}</p>
+                </div>
+                {auth.currentUser?.displayName === user && (
+                  <button
+                    onClick={() => handleDelete(id)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-full focus:outline-none"
+                  >
+                    Delete
+                  </button>
+                )}
               </motion.div>
-              <ToastContainer />
-            </>
+              <p className="mt-2">{message}</p>
+            </motion.div>
           ))}
         </div>
         <Input
