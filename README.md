@@ -1,70 +1,42 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://swakabilly-chat.vercel.app/
 
-## Available Scripts
+# swakabilly-chat
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Local Setup
+1. clone or fork the repo onto your computer
+2. download and install the latest version of node.js (https://nodejs.org/en/) for your Operating System
+3. using your Command Line navigate to the folder where the files are saved
+4. run 'npm i' to install all the dependencies
+5. next run 'npm run dev' to start the server on localhost:3000
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How to use 
+- click the Login Button to get Authorized to chat
+- on the main page you can create a new chatroom or join any currently open chat room
+- this will bring you to the chat you have either created or joined 
+- all the messages for that chat will be show in desending order
+- on the bottom of the screen you can use the textbox to send a message to all the people in that current chat
+- you can delete your chats from the chatroom with a button
+- when done you can logout with the header button or click the name of the app to the right to go back to the main page.
 
-### `npm test`
+## Features
+- Great styling!
+- Fully responsive!
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Packages
 
-### `npm run build`
+- `firebase`: A platform for developing mobile and web applications, offering services like authentication, real-time database, cloud storage, and hosting.
+- `framer-motion`: A popular animation library for creating fluid and dynamic UI transitions and animations in React applications.
+- `react`: A JavaScript library for building user interfaces, developed by Facebook and used for creating dynamic and interactive web applications.
+- `react-firebase-hooks`: A collection of React hooks that provide an easy way to integrate Firebase services into React components.
+- `react-toastify`: A notification library for React applications, providing customizable and easy-to-use toast notifications.
+- `universal-cookie`: A lightweight package for handling browser cookies in React and other JavaScript applications, with support for server-side rendering.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Coming Soon
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
