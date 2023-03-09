@@ -1,12 +1,15 @@
 import React from 'react'
 
+
 function Input(props) {
 
-    const { handleSubmit, newMessage, setNewMessage } = props;
+    const { handleSubmit, newMessage, setNewMessage} = props;
+
+    
 
   return (
     <div className='w-3/4 pt-4'>
-  <form className="justify-center flex w-full"   onSubmit={(event) => {
+  <form className="justify-center flex w-full" onSubmit={(event) => {
     handleSubmit(event);}}>
     <input
       className="w-full rounded-full py-3 px-4 mr-4 text-white focus:outline-none bg-gradient-to-r from-indigo-500 to-slate-600"

@@ -3,10 +3,8 @@ import LoginPage from "./components/LoginPage";
 import Cookies from "universal-cookie";
 import Chat from "./components/Chat";
 import { auth, db } from './firebase'
-import { signOut } from 'firebase/auth';
-import { collection, onSnapshot, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
-import Header from "./components/Header";
-import Input from "./components/Input";
+import { collection, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getToken } from "firebase/messaging";
 
 export default function App() {
   const cookies = new Cookies();
@@ -14,42 +12,14 @@ export default function App() {
   const [rooms, setRooms] = useState(null);
   const [roomList, setRoomList] = useState([]);
   const [newMessage, setNewMessage] = React.useState('');
+  const [isTokenFound, setTokenFound] = useState(false);
+  getToken(setTokenFound);
   const roomInputRef = useRef(null);
 
   const handleCreateRoom = () => {
     setRooms(roomInputRef.current.value);
   };
 
-  const signOutUser = async () => {
-    try {
-      await signOut(auth);
-      cookies.remove("auth_user");
-      setIsAuth(false);
-      setRooms(null);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getRooms = async () => {
-    try {
-      const roomRef = collection(db, 'messages');
-      const roomSnapshot = await getDocs(roomRef);
-      const roomSet = new Set();
-      roomSnapshot.docs.forEach((doc) => {
-        const roomName = doc.data().name;
-        if (!roomSet.has(roomName)) {
-          roomSet.add(roomName);
-        }
-      });
-      const roomList = [...roomSet];
-      console.log("Room list:", roomList);
-      setRoomList(roomList);
-    } catch (error) {
-      console.error("Error getting rooms:", error);
-    }
-  };
-  
   useEffect(() => {
     const roomRef = collection(db, 'messages');
     const unsubscribe = onSnapshot(roomRef, (snapshot) => {
@@ -66,7 +36,7 @@ export default function App() {
     return unsubscribe;
   }, []);
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (newMessage === '') return;
     try {
