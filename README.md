@@ -3,7 +3,7 @@ https://swakabilly-chat.vercel.app/
 
 # swakabilly-chat
 
-
+This is a real-time chat app that utilizes Firebase as its platform. Users can log in to the app to gain authorization to chat, create or join chat rooms, and send messages to all participants in the chat. The app is fully responsive and features great styling. It uses several packages such as framer-motion, react-firebase-hooks, react-toastify, and universal-cookie to provide dynamic UI transitions, integrate Firebase services into React components, and handle browser cookies.
 
 ## Local Setup
 1. clone or fork the repo onto your computer
