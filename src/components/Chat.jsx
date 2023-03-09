@@ -4,6 +4,7 @@ import { collection, addDoc, serverTimestamp, onSnapshot, query, where, orderBy,
 import { auth } from '../firebase'
 import Header from './Header';
 import Input from './Input';
+import { motion } from "framer-motion";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -23,12 +24,13 @@ function Chat(props) {
 
     const notify = React.useCallback(() =>
     toast.success('New message added', {
-      position: 'top-left',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
     }), []);
   
    React.useEffect(() => {
@@ -41,11 +43,12 @@ function Chat(props) {
         if (!hasNewMessage) {
           return;
         }
+        // check if the user is not the one who sent the message
+        if (messages[0].user !== currentUser) {
         notify();
+        }
         setHasNewMessage(false);
       }, [hasNewMessage, notify]);
-      
-  
 
       React.useEffect(() => {
         const queryMessages = query(
@@ -117,8 +120,16 @@ function Chat(props) {
   <div className="flex flex-col w-3/4 flex-grow bg-gradient-to-r from-indigo-600 to-slate-900 border-4 border-white rounded-lg overflow-y-auto">
   {messages.map(({ id, message, user, userImage, createdAt }) => (
     <><ToastContainer />
-    <div key={id} className="flex flex-col p-4 pb-2 text-white rounded">
-          <div className="flex items-center justify-between">
+    <motion.div
+    initial={{ opacity: 0, y: 100 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: .5 }}
+     key={id} className="flex flex-col p-4 pb-2 text-white rounded">
+          <motion.div
+            initial={{ opacity: 0, scale: 5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: .5 }}
+           className="flex items-center justify-between">
               <div className="flex items-center">
                   <img className="w-12 h-12 rounded-full  mr-4" src={userImage} alt="" />
                   <div>
@@ -131,10 +142,11 @@ function Chat(props) {
                       Delete
                   </button>
               </div>
-          </div>
+          </motion.div>
           <p className="ml-16 text-md">{message}</p>
-          <ToastContainer />
-      </div></>
+      </motion.div>
+      <ToastContainer />
+      </>
   ))}
   
 </div>
