@@ -32,12 +32,13 @@ function Chat(props) {
     () =>
       toast.success("New message added", {
         position: "top-right",
-        autoClose: 1000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        theme: "dark",
+        progress: undefined,
+        theme: "light",
       }),
     []
   );
@@ -171,6 +172,19 @@ function Chat(props) {
           newMessage={newMessage}
           setNewMessage={setNewMessage}
         />
+       <ToastContainer
+position="top-right"
+autoClose={1200}
+limit={1}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
       </div>
     </>
   );
