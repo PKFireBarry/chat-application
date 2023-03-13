@@ -161,7 +161,7 @@ function Chat(props) {
 
     <div className="w-3/4 p-6">
       <div className="flex justify-between">
-        <h1 className="font-bold text-white text-3xl pb-4">Messages</h1>
+        <h1 className="font-bold text-white text-4xl pb-4">Messages</h1>
         <a className="hover:underline" href="/">Create A New Chatroom?</a>
       </div>
       
