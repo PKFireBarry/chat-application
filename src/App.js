@@ -66,13 +66,13 @@ export default function App() {
 
   if (!isAuth) {
     return (
-      <div className="App bg-slate-200 w-screen over h-screen bg-gradient-to-r from-indigo-200 via-purple-700 to-red-500">
+      <div className="App w-screen over h-screen bg-[#8338ec]">
         <LoginPage setIsAuth={setIsAuth} />
       </div>
     );
   } else {
     return (
-      <div className="App bg-slate-200 w-screen over h-screen bg-gradient-to-r from-indigo-200 via-purple-700 to-red-500">
+      <div className="App w-screen over h-screen bg-[#8338ec]">
         {!isAuth ? (
           <LoginPage setIsAuth={setIsAuth} />
         ) : (
@@ -87,7 +87,7 @@ export default function App() {
                 />
               </div>
             ) : (
-              <div className="relative min-h-screen bg-gradient-to-r from-indigo-700 via-purple-500 to-red-500">
+              <div className="relative min-h-screen bg-[#8338ec]">
                 <div className="mb-20 p-4">
                   <h2 className="text-center text-white text-3xl font-semibold py-8 underline">
                     Open Chat Rooms

@@ -4,15 +4,15 @@ function Input(props) {
   const { handleSubmit, newMessage, setNewMessage } = props;
 
   return (
-    <div className="w-3/4 pt-4">
+    <div className="w-3/4 py-4">
       <form
-        className="justify-center flex w-full"
+        className="flex w-full"
         onSubmit={(event) => {
           handleSubmit(event);
         }}
       >
         <input
-          className="w-full rounded-full py-3 px-4 mr-4 text-white focus:outline-none bg-gradient-to-r from-indigo-500 to-slate-600"
+          className="w-full rounded-full py-3 px-4 mr-4 text-black focus:outline-none bg-white"
           onChange={(e) => setNewMessage(e.target.value)}
           type="text"
           value={newMessage}
