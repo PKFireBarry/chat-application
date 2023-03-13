@@ -165,15 +165,16 @@ function Chat(props) {
         <a className="hover:underline" href="/">Create A New Chatroom?</a>
       </div>
       
-      <div className="bg-slate-800 h-[82.5%] border-4 border-black rounded-lg overflow-auto">
+      <div className="bg-slate-800 h-[82.5%] border-4 border-black rounded-lg smooth-scroll overflow-auto">
         {messages.map(({ id, message, user, userImage, createdAt }) => (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            key={id}
-            className="flex flex-col p-4 pb-2 hover:bg-slate-500 text-white rounded"
-          >
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ backgroundColor: '#6B7280', transitionDelay: 0.2 }}
+              key={id}
+              className="flex flex-col p-4 pb-2 text-white rounded"
+            >
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
